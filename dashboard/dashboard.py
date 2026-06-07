@@ -1,15 +1,22 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import os
 
 # 1. Page Config
 st.set_page_config(page_title="Blood Donation Forecast", layout="wide")
 st.title(" Blood Donation Prediction Dashboard")
 
 # 2. Load Data
-@st.cache_data # This keeps the data in memory so the app stays fast
+@st.cache_data
 def load_data():
-    return pd.read_csv("data/final_dashboard_data.csv")
+    # Get the directory where the current script (dashboard.py) is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Go one level up to the root folder, then into the 'data' folder
+    file_path = os.path.join(script_dir, '..', 'data', 'final_dashboard_data.csv')
+    
+    return pd.read_csv(file_path)
 
 df = load_data()
 
